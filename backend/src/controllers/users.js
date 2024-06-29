@@ -1,5 +1,4 @@
 import { pool } from "../database.js";
-import bcrypt from "bcrypt";
 import InternalError from "../errors/handleError.js";
 
 export const getUsers = async (req, res) => {
@@ -38,8 +37,7 @@ export const GetTecnicos = async (req, res) => {
       const { CT_NOMBRE, CT_APELLIDO_UNO, CT_APELLIDO_DOS, CN_TELEFONO, CT_CEDULA, CT_CORREO, CT_PUESTO, CN_DEPARTAMENTO, CB_ESTADO, CT_CONTRASENA, CN_ROL} = req.body;
   
       const saltRounds = 5;
-      const hashedPassword = await bcrypt.hash(CT_CONTRASENA, saltRounds);
-  
+
       const [result] = await pool.query(
         'CALL createUser(?,?,?,?,?,?,?,?,?,?,?)',
         [CT_NOMBRE, CT_APELLIDO_UNO, CT_APELLIDO_DOS, CN_TELEFONO, CT_CEDULA, CT_CORREO, CT_PUESTO, CN_DEPARTAMENTO, CB_ESTADO, CT_CONTRASENA, CN_ROL]
